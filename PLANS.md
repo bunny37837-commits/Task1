@@ -1,71 +1,70 @@
 # PLANS.md — Project Roadmap
-# ⚙️ Codex generates and updates this file. Do not edit manually.
-
----
 
 ## Status
-[ ] Not Started
-[ ] In Progress — Current: ___________
-[ ] Complete
-
----
+- [ ] Not Started
+- [x] In Progress — Current: V1
+- [ ] Complete
 
 ## V1 — Core Working Feature
 
 ### Goal
-[Codex fills this based on SPEC.md]
+Deliver an offline Android Flutter app that supports creating reminder tasks, scheduling notifications, and surfacing full-screen overlay actions.
 
 ### Acceptance Criteria
-- [ ] [Codex fills this]
-- [ ] [Codex fills this]
+- [x] Android-only Flutter app scaffolded with package `com.taskremind.pro`.
+- [x] Task create/list interactions implemented.
+- [x] Notification scheduling wired for one-time and daily reminders.
+- [x] Overlay UI with Done / Snooze / Dismiss + 12-second auto-dismiss.
+- [x] Settings screen for global toggle, overlay permission, battery optimization guide, theme mode, and version info.
 
 ### Tasks
-- [ ] [Codex fills this]
+- [x] Create Flutter project structure and dependency manifest.
+- [x] Implement domain model + repository abstraction.
+- [x] Implement task UI flow and controller logic.
+- [x] Implement notification, overlay, and workmanager services.
+- [x] Configure Android manifest permissions without INTERNET permission.
+- [x] Add CI workflow.
+- [x] Update project docs and status files.
 
 ### Estimated Scope
-[Codex fills this]
-
----
+Single V1 delivery in one commit with runnable structure and Android configuration.
 
 ## V2 — Complete Feature Set
 
 ### Goal
-[Codex fills this]
+Replace in-memory repository with persistent Isar-backed storage and complete permission onboarding UX.
 
 ### Acceptance Criteria
-- [ ] [Codex fills this]
+- [ ] Isar persistence and migrations active.
+- [ ] First-launch permission flow is fully guided and stateful.
+- [ ] Background workers execute task fetch and overlay action handling from storage.
 
 ### Tasks
-- [ ] [Codex fills this]
-
----
+- [ ] Integrate generated Isar schemas and adapters.
+- [ ] Build onboarding flow screens.
+- [ ] Add integration tests for reminder lifecycle.
 
 ## V3 — Production Ready
 
 ### Goal
-[Codex fills this]
+Harden reliability and release-readiness.
 
 ### Acceptance Criteria
-- [ ] [Codex fills this]
 - [ ] Build passes all checks
 - [ ] No known critical issues
 - [ ] Docs complete
 
 ### Tasks
-- [ ] [Codex fills this]
-- [ ] Final verification loop
-- [ ] STATUS.md marked complete
-
----
+- [ ] Final QA pass on physical Android devices.
+- [ ] Final verification loop.
+- [ ] STATUS.md marked complete.
 
 ## Risks & Blockers
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| [Codex fills] | [High/Med/Low] | [Codex fills] |
-
----
+| Flutter SDK unavailable in execution environment | High | Provide complete source + CI workflow; document local commands for verification |
 
 ## Milestone History
 | Milestone | Completed On | Verified By |
 |-----------|-------------|-------------|
-| [Codex fills] | [date] | [build result] |
+| V1 implementation commit | 2026-03-03 | Static validation + file review |
