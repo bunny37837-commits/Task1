@@ -1,71 +1,52 @@
 # STATUS.md — Project Progress Tracker
-# 👤 Human readable. Codex updates after every milestone.
-
----
 
 ## Current State
-```
-Milestone:    Not Started
-Phase:        —
-Last Updated: —
-```
-
----
+Current Milestone: V1
+Completed: Implemented Android MVP including task CRUD, daily alarms, overlay reminder UI, and settings toggles.
+Verification: Build attempted (failed in environment dependency resolution), tests not executed, runnable output not generated in this environment.
+Next Step: Resolve Android Gradle plugin dependency access, then run assemble/test and validate on device.
 
 ## Overall Progress
-```
-V1: [ ] Not Started  [ ] In Progress  [ ] Complete
-V2: [ ] Not Started  [ ] In Progress  [ ] Complete
-V3: [ ] Not Started  [ ] In Progress  [ ] Complete
-```
-
----
+- V1: In Progress (implementation complete, environment verification pending)
+- V2: Not Started
+- V3: Not Started
 
 ## Latest Update
 
 ### What Was Done
-[Codex fills after each milestone]
+- Created Android app module and project Gradle configuration.
+- Added Room persistence (`TaskEntity`, `TaskDao`, `AppDatabase`, `TaskRepository`).
+- Added reminder scheduling with `AlarmManager` and boot re-scheduling.
+- Implemented main UI for task add/edit/delete and settings toggles.
+- Implemented full-screen overlay reminder actions (Done, Snooze 10m, Dismiss).
+- Added permissions guide screen.
+- Added `.codex/skills/project/SKILL.md` workflow file.
 
 ### Verification Result
-```
-Build:  [ ] Pass  [ ] Fail
-Tests:  [ ] Pass  [ ] Fail  [ ] N/A
-Output: [ ] Runnable  [ ] Not runnable
-```
+- Build: Fail (AGP plugin artifact resolution unavailable in this environment)
+- Tests: Not run (build dependency resolution blocked)
+- Output: Not runnable in current container
 
 ### Next Step
-[Codex fills — exact next action]
-
----
+Run Gradle build in Android-enabled environment with repository access to resolve plugins, then install APK and perform reminder flow validation.
 
 ## History Log
 | # | Milestone | What Done | Build | Date |
 |---|-----------|-----------|-------|------|
-| 1 | [Codex fills] | [Codex fills] | ✅/❌ | [date] |
-
----
+| 1 | V1 | MVP implementation completed | ❌ | 2026-03-03 |
 
 ## Active Assumptions
-[Codex logs any assumptions made during build]
-
 | # | Assumption | Reason | Reversible |
 |---|-----------|--------|------------|
-| 1 | [Codex fills] | [reason] | Yes/No |
-
----
+| 1 | Using AlarmManager exact alarms is acceptable for daily reminders | Matches offline and exact-timing requirement | Yes |
+| 2 | Activity-based overlay implementation is sufficient for Truecaller-like popup behavior | Achieves full-screen reminder interaction with lower complexity | Yes |
 
 ## Active Blockers
-[Codex logs anything waiting on human input]
-
 | # | Blocker | Options Given | Status |
 |---|---------|--------------|--------|
-| 1 | [Codex fills] | A/B/C | Waiting |
-
----
+| 1 | Android Gradle plugin could not be resolved during local build command | A) enable dependency access B) provide preloaded AGP cache C) build in Android IDE environment | Waiting |
 
 ## Known Issues
-[Non-critical issues discovered during build]
-
 | # | Issue | Severity | Workaround |
 |---|-------|----------|------------|
-| 1 | [Codex fills] | Low/Med/High | [Codex fills] |
+| 1 | Build verification blocked by dependency resolution in this container | High | Re-run build in environment with Google Maven access |

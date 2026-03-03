@@ -1,75 +1,43 @@
 # DECISIONS.md — Technical Decisions Log
-# ⚙️ Codex updates this. Every major decision must be recorded here with reasoning.
-
----
-
-## Decision Log Format
-Each entry must follow this format:
-
-```
-## [DEC-001] Decision Title
-Date: YYYY-MM-DD
-Status: Decided / Reconsidered / Superseded
-
-Decision: [What was decided]
-Reason:   [Why this choice]
-Rejected: [What was NOT chosen and why]
-Impact:   [What this affects]
-```
-
----
 
 ## [DEC-001] Architecture Pattern
-Date: [Codex fills]
+Date: 2026-03-03
 Status: Decided
 
-Decision: [e.g., MVVM with Repository pattern]
-Reason:   [Codex fills]
-Rejected: [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: Single-module Android app with Activity-based UI + repository abstraction over Room.
+Reason: Fastest path to a working offline MVP with maintainable separation between UI and storage.
+Rejected: Full MVVM with ViewModels/Flows (more boilerplate for current scope).
+Impact: Clear local data layer and simpler incremental evolution to MVVM later.
 
 ## [DEC-002] Database / Storage
-Date: [Codex fills]
+Date: 2026-03-03
 Status: Decided
 
-Decision: [e.g., Room / SQLite / Firebase]
-Reason:   [Codex fills]
-Rejected: [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: Room database (`TaskEntity`, `TaskDao`) for persistent task storage.
+Reason: Reliable structured offline persistence, lifecycle-safe and Kotlin-friendly.
+Rejected: Raw SQLite (higher manual maintenance), file-based JSON (weaker schema safety).
+Impact: Stable local task persistence across app restarts and device reboots.
 
 ## [DEC-003] Key Libraries / Dependencies
-Date: [Codex fills]
+Date: 2026-03-03
 Status: Decided
 
-Decision: [Codex fills]
-Reason:   [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: AndroidX AppCompat/Material/RecyclerView + Room + Coroutines.
+Reason: Mature stack with minimal complexity for this feature set.
+Impact: Standard Android development workflow and broad compatibility.
 
 ## [DEC-004] Network Access
-Date: [Codex fills]
-Status: [Decided / Not Required]
+Date: 2026-03-03
+Status: Not Required
 
-Decision: [Network OFF / ON with reason]
-Allowed Domains: [if enabled]
-Reason:   [Codex fills]
-
----
+Decision: Network OFF.
+Allowed Domains: None.
+Reason: SPEC requires 100% offline behavior with no backend/cloud usage.
 
 ## [DEC-005] Security Approach
-Date: [Codex fills]
+Date: 2026-03-03
 Status: Decided
 
-Decision: [Codex fills]
-Reason:   [Codex fills]
-Impact:   [Codex fills]
-
----
-
-## Future Decisions
-[Codex adds new entries here as project progresses]
+Decision: No credential handling; local-only storage; explicit runtime permission guidance for overlay/notifications.
+Reason: App scope excludes authentication and remote APIs.
+Impact: Reduced attack surface and simpler compliance with offline requirement.
