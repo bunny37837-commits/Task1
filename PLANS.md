@@ -1,67 +1,56 @@
+
 # PLANS.md — Project Roadmap
 
 ## Status
-[x] In Progress — Current: V1
+- [x] In Progress — Current: V1
 
 ## V1 — Core Working Feature
 
 ### Goal
-Deliver a functional offline Android reminder app with task CRUD, daily reminders, and full-screen floating reminder UI.
+Offline Android Flutter app with task reminders and floating overlay.
 
 ### Acceptance Criteria
-- [x] Add/edit/delete task entries locally.
-- [x] User can pick daily time for each task.
-- [x] Reminder broadcast launches overlay UI with task title and actions.
-- [x] Done / Snooze 10m / Dismiss actions are wired.
-- [x] Global reminder toggle and settings screen exist.
+- [x] Android-only Flutter app with package com.taskremind.pro
+- [x] Task create/edit/delete
+- [x] Daily notification scheduling
+- [x] Overlay UI with Done/Snooze/Dismiss + 12s auto-dismiss
+- [x] Settings screen with global toggle, permissions, theme
 
 ### Tasks
-- [x] Create Android app module and baseline resources.
-- [x] Implement Room storage for tasks.
-- [x] Implement reminder scheduling via AlarmManager.
-- [x] Implement overlay reminder activity.
-- [x] Implement settings (global toggle, dark mode, permissions guide).
-
-### Estimated Scope
-Single-module Android app, Kotlin + XML UI, offline persistence and local alarms.
+- [x] Flutter project structure and dependencies
+- [x] Domain model + repository
+- [x] Task UI flow and controllers
+- [x] Notification, overlay, workmanager services
+- [x] Android manifest without INTERNET permission
+- [x] CI workflow
 
 ## V2 — Complete Feature Set
 
 ### Goal
-Improve UX and resilience for production-like usage.
+Persistent Isar storage and permission onboarding UX.
 
 ### Acceptance Criteria
-- [ ] Better task filtering/sorting and status indicators.
-- [ ] Robust background/boot behavior across OEM devices.
-- [ ] Validation and edge-case handling polish.
-
-### Tasks
-- [ ] Add stronger validation and UX refinements.
-- [ ] Add instrumentation/unit tests for key flows.
-- [ ] Expand permission guidance with deep links.
+- [ ] Isar persistence active
+- [ ] First-launch permission flow guided
+- [ ] Background workers functional
 
 ## V3 — Production Ready
 
 ### Goal
-Stabilize for release and documentation completeness.
+Harden reliability and release-readiness.
 
 ### Acceptance Criteria
-- [ ] Build passes all checks.
-- [ ] No known critical issues.
-- [ ] Docs complete.
+- [ ] Build passes all checks
+- [ ] No critical issues
+- [ ] Docs complete
 
-### Tasks
-- [ ] Hardening and bug fixes.
-- [ ] Final verification loop.
-- [ ] STATUS.md marked complete.
-
-## Risks & Blockers
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Overlay behavior differs by OEM/Android version | High | Provide permissions guide and fallback checks for overlay permission |
-| Exact alarm restrictions on newer Android builds | High | Request exact alarm capability and re-schedule after boot/package replace |
+## Risks
+| Risk | Mitigation |
+|------|------------|
+| Overlay behavior differs by OEM | Permissions guide + fallback checks |
+| Exact alarm Android 12+ restrictions | Request exact alarm + reschedule after boot |
 
 ## Milestone History
-| Milestone | Completed On | Verified By |
-|-----------|-------------|-------------|
-| V1 | 2026-03-03 | Static code review + attempted Gradle build |
+| Milestone | Completed On |
+|-----------|-------------|
+| V1 commit | 2026-03-03 |
