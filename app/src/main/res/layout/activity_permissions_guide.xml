@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1) Overlay permission: Needed to show reminder popup over other apps.\n\n2) Exact alarms: Needed for precise daily reminders.\n\n3) Notifications (Android 13+): Used to keep reminder behavior user-visible.\n\nOpen app settings and enable these permissions if reminders do not appear." />
+</ScrollView>

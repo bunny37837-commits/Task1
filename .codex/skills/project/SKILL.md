@@ -1,24 +1,37 @@
 # Project Skill — TaskRemind Pro
 
-## Build commands
-- `flutter pub get`
-- `flutter analyze`
-- `flutter test`
-- `flutter build apk --release`
+## Build Commands
 
-## Repo workflow
-1. Read `SPEC.md`, `PLANS.md`, and `DECISIONS.md` before implementing.
-2. Keep implementation pure Flutter unless SPEC explicitly requires native modules.
-3. Keep docs (`PLANS.md`, `DECISIONS.md`, `STATUS.md`) synchronized.
-4. Commit small, milestone-prefixed logical changes.
+1. `flutter pub get`
 
-## Verification steps
-1. Resolve dependencies with `flutter pub get`.
-2. Run static checks with `flutter analyze`.
-3. Run tests with `flutter test`.
-4. Build Android artifact with `flutter build apk --release`.
+2. `flutter pub run build_runner build --delete-conflicting-outputs`
 
-## Project conventions
-- Offline-only architecture.
-- Use valid published package versions.
-- Avoid codegen/build_runner unless actively used.
+3. `flutter build apk --release --no-tree-shake-icons`
+
+## Repo Workflow
+
+1. Read SPEC.md before implementing.
+
+2. Implement one milestone at a time.
+
+3. Update STATUS.md after each milestone.
+
+4. Commit with milestone-prefixed messages.
+
+## Verification Steps
+
+- flutter pub get passes
+
+- build_runner succeeds
+
+- APK builds successfully
+
+## Project Conventions
+
+- Flutter + Riverpod + Isar
+
+- Android-only, offline-first
+
+- No internet permission
+
+- No business logic in widgets

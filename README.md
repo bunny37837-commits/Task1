@@ -1,29 +1,24 @@
-# TaskRemind Pro (Flutter)
+# TaskRemind Pro
 
-TaskRemind Pro is an **offline Flutter app** for daily task reminders targeting Android.
+Offline Android reminder app built with Flutter.
 
-## Project shape
-- Pure Flutter app structure (`lib/`, `android/`, `pubspec.yaml`)
-- Riverpod-based state management
-- CI workflow builds release APK
+## Features
+- Create, edit, delete tasks
+- Set daily reminder time per task
+- Global reminders on/off toggle
+- Floating overlay with Done / Snooze 10min / Dismiss
+- 12-second auto-dismiss countdown
+- Settings: dark mode, permissions guide, battery optimization
 
-## Dependencies (pinned)
-- `flutter_overlay_window: ^0.5.0`
-- `flutter_local_notifications: ^20.1.0`
-- `workmanager: ^0.9.0+3`
-- `permission_handler: ^12.0.1`
-- `flutter_riverpod: ^3.0.3`
+## Tech Stack
+- Flutter + Riverpod
+- Isar (local database)
+- flutter_local_notifications
+- flutter_overlay_window
+- WorkManager
 
-## CI checks
-GitHub Actions runs:
-1. `flutter pub get`
-2. `flutter analyze`
-3. `flutter build apk --release`
-
-## Local commands
+## Commands
 ```bash
 flutter pub get
-flutter analyze
-flutter test
-flutter build apk --release
-```
+flutter pub run build_runner build --delete-conflicting-outputs
+flutter build apk --release --no-tree-shake-icons
