@@ -25,7 +25,8 @@ Future<void> main() async {
 final isarProvider = Provider<Isar>((ref) => throw UnimplementedError());
 
 @pragma('vm:entry-point')
-void overlayMain() {
+Future<void> overlayMain() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationsService.instance.initialize();
   runApp(const OverlayApp());
 }

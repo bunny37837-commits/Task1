@@ -53,3 +53,14 @@ Decision: No INTERNET permission. Local storage only.
 Reason: Offline requirement, reduced attack surface.
 
 Impact: AndroidManifest requests only notification/alarm/overlay permissions.
+## [DEC-006] Reminder Trigger Reliability
+
+Date: 2026-03-04
+
+Status: Decided
+
+Decision: Persist tasks in Isar and register a dedicated WorkManager one-off job per reminder task ID.
+
+Reason: PR review identified that in-memory tasks and missing worker registration caused reminder data loss and dead overlay execution path.
+
+Impact: Reminder creation/snooze/done now keeps storage and background execution in sync.

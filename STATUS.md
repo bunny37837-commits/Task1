@@ -4,9 +4,9 @@
 
 Milestone: V1
 
-Phase: Implementation completed
+Phase: Review fixes completed
 
-Last Updated: 2026-03-03
+Last Updated: 2026-03-04
 
 ## Overall Progress
 
@@ -20,31 +20,20 @@ Last Updated: 2026-03-03
 
 ### What Was Done
 
-- Built TaskRemind Pro V1 Flutter app for Android
-
-- Task list, create, edit, delete flow
-
-- Daily notification scheduling service
-
-- Overlay UI with Done/Snooze/Dismiss and 12s auto-dismiss
-
-- Settings screen with global toggle, permissions, theme
-
-- Android manifest with all required permissions (no INTERNET)
-
-- CI workflow for APK build
+- Fixed repository persistence bug by moving task reads/writes from in-memory list to Isar transactions.
+- Added WorkManager reminder registration/cancellation from task create/done/snooze flows.
+- Implemented functional overlay Snooze action that updates task time by +10 minutes and reschedules notification + worker.
+- Initialized notifications in overlay isolate so overlay actions can schedule/cancel reminders safely.
 
 ### Verification Result
 
-- Build: Pending CI run
-
-- Tests: Pending
-
-- Output: To be verified via GitHub Actions
+- Build: ⚠️ Not executed locally (`flutter` SDK unavailable in environment)
+- Tests: ⚠️ Not executed locally (`flutter` SDK unavailable in environment)
+- Output: Code updated and ready for CI/device validation
 
 ### Next Step
 
-CI build green → install APK → test on device
+Run CI + on-device reminder flow validation for create → fire overlay → snooze/done actions.
 
 ## History Log
 
@@ -53,14 +42,19 @@ CI build green → install APK → test on device
 |---|-----------|-----------|-------|------|
 
 | 1 | V1 | Complete Flutter implementation | ⏳ CI | 2026-03-03 |
+| 2 | V1 | Codex review fixes for persistence/worker/snooze | ⚠️ Local SDK Missing | 2026-03-04 |
 
 ## Active Assumptions
 
-| # | Assumption | Reversible |
+ASSUMPTION: Isar default instance name is shared between main isolate and overlay isolate.
+Reason:     Overlay actions need access to the same task records to update/snooze reminders.
+Impact:     Overlay Done/Snooze operations target the same persisted task IDs created in-app.
+Reversible: yes
 
-|---|-----------|------------|
-
-| 1 | In-memory repo for V1, Isar in V2 | Yes |
+ASSUMPTION: Scheduling WorkManager one-off task per reminder time is sufficient for runtime overlay triggering.
+Reason:     Existing callback dispatcher only executes when explicit jobs are registered.
+Impact:     Overlay path is activated for created/snoozed reminders.
+Reversible: yes
 
 ## Known Issues
 
