@@ -1,43 +1,55 @@
-# DECISIONS.md — Technical Decisions Log
-
 ## [DEC-001] Architecture Pattern
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: Single-module Android app with Activity-based UI + repository abstraction over Room.
-Reason: Fastest path to a working offline MVP with maintainable separation between UI and storage.
-Rejected: Full MVVM with ViewModels/Flows (more boilerplate for current scope).
-Impact: Clear local data layer and simpler incremental evolution to MVVM later.
+Decision: Flutter + Riverpod state management with feature-first folders and service layer separation.
+
+Reason: Keeps UI declarative while isolating scheduling/overlay behavior from widgets.
+
+Impact: Controllers own state transitions, widgets remain presentation focused.
 
 ## [DEC-002] Database / Storage
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: Room database (`TaskEntity`, `TaskDao`) for persistent task storage.
-Reason: Reliable structured offline persistence, lifecycle-safe and Kotlin-friendly.
-Rejected: Raw SQLite (higher manual maintenance), file-based JSON (weaker schema safety).
-Impact: Stable local task persistence across app restarts and device reboots.
+Decision: Isar local database for persistent task storage.
 
-## [DEC-003] Key Libraries / Dependencies
+Reason: Offline storage, fast, Flutter-native.
+
+Impact: Task model structured for Isar annotations.
+
+## [DEC-003] Key Libraries
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: AndroidX AppCompat/Material/RecyclerView + Room + Coroutines.
-Reason: Mature stack with minimal complexity for this feature set.
-Impact: Standard Android development workflow and broad compatibility.
+Decision: Riverpod, Isar, flutter_local_notifications, flutter_overlay_window, workmanager, permission_handler.
+
+Reason: Aligns with SPEC requirements and Android reminder feature set.
 
 ## [DEC-004] Network Access
+
 Date: 2026-03-03
+
 Status: Not Required
 
 Decision: Network OFF.
-Allowed Domains: None.
-Reason: SPEC requires 100% offline behavior with no backend/cloud usage.
 
-## [DEC-005] Security Approach
+Reason: App is 100% offline, no backend, no cloud sync.
+
+## [DEC-005] Security
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: No credential handling; local-only storage; explicit runtime permission guidance for overlay/notifications.
-Reason: App scope excludes authentication and remote APIs.
-Impact: Reduced attack surface and simpler compliance with offline requirement.
+Decision: No INTERNET permission. Local storage only.
+
+Reason: Offline requirement, reduced attack surface.
+
+Impact: AndroidManifest requests only notification/alarm/overlay permissions.
