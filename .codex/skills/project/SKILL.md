@@ -1,83 +1,24 @@
----
-name: project-workflow
-description: Use this skill when starting, continuing, or completing any development task in this project. Handles full build lifecycle from planning to production.
----
+# Project Skill — TaskRemind Pro
 
-# Project Workflow Skill
+## Build commands
+- `flutter pub get`
+- `flutter analyze`
+- `flutter test`
+- `flutter build apk --release`
 
-## On Project Start
-1. Read SPEC.md completely
-2. Read AGENTS.md completely
-3. Read DECISIONS.md (if exists)
-4. Generate PLANS.md with V1→V2→V3 milestones
-5. Confirm structure before coding begins
+## Repo workflow
+1. Read `SPEC.md`, `PLANS.md`, and `DECISIONS.md` before implementing.
+2. Keep implementation pure Flutter unless SPEC explicitly requires native modules.
+3. Keep docs (`PLANS.md`, `DECISIONS.md`, `STATUS.md`) synchronized.
+4. Commit small, milestone-prefixed logical changes.
 
-## On Each Milestone
-1. Work only on active milestone
-2. Keep project runnable at all times
-3. Run build + tests after every significant change
-4. Fix all errors before moving forward
-5. Update STATUS.md when milestone completes
+## Verification steps
+1. Resolve dependencies with `flutter pub get`.
+2. Run static checks with `flutter analyze`.
+3. Run tests with `flutter test`.
+4. Build Android artifact with `flutter build apk --release`.
 
-## Compaction Guard (Long Runs)
-After every major phase:
-- Re-read SPEC.md
-- Re-read DECISIONS.md
-- Then continue
-
-## Build Commands
-[Project-specific — fill these when project starts]
-
-```
-# Example for Android:
-./gradlew build
-./gradlew test
-./gradlew assembleDebug
-
-# Example for Web/Node:
-npm install
-npm run build
-npm test
-```
-
-## Verification Checklist (Every Milestone)
-```
-[ ] Build runs without error
-[ ] Tests pass
-[ ] No skipped/ignored errors
-[ ] Output is runnable
-[ ] STATUS.md updated
-[ ] DECISIONS.md updated if decision made
-```
-
-## Commit Format
-```
-[V1] feat: description
-[V1] fix: description
-[V2] refactor: description
-```
-
-## Assumption Logging Format
-```
-ASSUMPTION: [what]
-Reason:     [why]
-Impact:     [what it affects]
-Reversible: yes/no
-```
-
-## BLOCKED Format
-```
-BLOCKED — Critical input required
-Options:
-A) [option]
-B) [option]
-C) [option]
-```
-
-## Definition of DONE
-Task complete only when:
-- Build ✅
-- Tests ✅
-- Runnable ✅
-- Docs updated ✅
-- STATUS updated ✅
+## Project conventions
+- Offline-only architecture.
+- Use valid published package versions.
+- Avoid codegen/build_runner unless actively used.

@@ -1,75 +1,72 @@
 # DECISIONS.md — Technical Decisions Log
-# ⚙️ Codex updates this. Every major decision must be recorded here with reasoning.
-
----
-
-## Decision Log Format
-Each entry must follow this format:
-
-```
-## [DEC-001] Decision Title
-Date: YYYY-MM-DD
-Status: Decided / Reconsidered / Superseded
-
-Decision: [What was decided]
-Reason:   [Why this choice]
-Rejected: [What was NOT chosen and why]
-Impact:   [What this affects]
-```
-
----
 
 ## [DEC-001] Architecture Pattern
-Date: [Codex fills]
-Status: Decided
+Date: 2026-03-03
+Status: Superseded
 
-Decision: [e.g., MVVM with Repository pattern]
-Reason:   [Codex fills]
-Rejected: [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: Single-module Android app with Activity-based UI + repository abstraction over Room.
+Reason: Initial MVP attempt prioritized native Android implementation speed.
+Rejected: Flutter-first implementation in the first pass.
+Impact: Superseded by DEC-007 to align with pure Flutter requirement.
 
 ## [DEC-002] Database / Storage
-Date: [Codex fills]
-Status: Decided
+Date: 2026-03-03
+Status: Superseded
 
-Decision: [e.g., Room / SQLite / Firebase]
-Reason:   [Codex fills]
-Rejected: [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: Room database (`TaskEntity`, `TaskDao`) for persistent task storage.
+Reason: Reliable structured offline persistence in native Android.
+Rejected: Flutter-local persistence in initial pass.
+Impact: Native data layer removed in pure Flutter repair.
 
 ## [DEC-003] Key Libraries / Dependencies
-Date: [Codex fills]
+Date: 2026-03-04
 Status: Decided
 
-Decision: [Codex fills]
-Reason:   [Codex fills]
-Impact:   [Codex fills]
-
----
+Decision: Flutter-first stack with `flutter_overlay_window`, `flutter_local_notifications`, `workmanager`, `permission_handler`, and `flutter_riverpod`.
+Reason: Required by PR repair guidance and pure Flutter acceptance criteria.
+Rejected: Native Android-only libraries as primary implementation path.
+Impact: Repository now follows Flutter app layout and Flutter CI workflow.
 
 ## [DEC-004] Network Access
-Date: [Codex fills]
-Status: [Decided / Not Required]
+Date: 2026-03-03
+Status: Not Required
 
-Decision: [Network OFF / ON with reason]
-Allowed Domains: [if enabled]
-Reason:   [Codex fills]
-
----
+Decision: Network OFF for runtime app behavior.
+Allowed Domains: None at runtime.
+Reason: SPEC requires 100% offline behavior with no backend/cloud usage.
 
 ## [DEC-005] Security Approach
-Date: [Codex fills]
+Date: 2026-03-03
 Status: Decided
 
-Decision: [Codex fills]
-Reason:   [Codex fills]
-Impact:   [Codex fills]
+Decision: No credential handling; local-only app behavior.
+Reason: App scope excludes authentication and remote APIs.
+Impact: Reduced attack surface and simpler compliance with offline requirement.
 
----
+## [DEC-006] Flutter dependency and CI alignment repair
+Date: 2026-03-04
+Status: Decided
 
-## Future Decisions
-[Codex adds new entries here as project progresses]
+Decision: Keep valid package versions and avoid codegen/build_runner unless used.
+Reason: Mergeability and toolchain stability requirements.
+Rejected: Introducing generator chains without actual codegen usage.
+Impact: Cleaner dependency graph and CI alignment.
+
+## [DEC-007] Pure Flutter project structure
+Date: 2026-03-04
+Status: Decided
+
+Decision: Remove standalone native `:app` Android implementation and use standard Flutter project layout (`lib/`, `android/` scaffold, Flutter CI APK build).
+Reason: Explicit instruction to stop adding non-Flutter native app code.
+Rejected: Keeping root-native Gradle project with custom Android module.
+Impact: PR is aligned with expected Flutter architecture and CI can build APK via Flutter.
+
+
+## [DEC-008] Binary-free repository policy for PR compatibility
+Date: 2026-03-04
+Status: Decided
+
+Decision: Keep repository source-only and exclude binary/build artifacts (`*.jar`, `*.apk`, `*.aab`, `build/`, `.dart_tool/`).
+Reason: Prior PR creation failed due to binary-file handling limitation.
+Rejected: Committing generated binaries to source control.
+Impact: Improves mergeability and prevents PR tooling failures.

@@ -1,71 +1,57 @@
 # STATUS.md — Project Progress Tracker
-# 👤 Human readable. Codex updates after every milestone.
-
----
 
 ## Current State
-```
-Milestone:    Not Started
-Phase:        —
-Last Updated: —
-```
-
----
+Current Milestone: V1
+Completed: Converted repository from mixed native Android + Flutter stub to pure Flutter project layout and updated CI to build release APK.
+Verification: Structural checks passed; local Flutter commands blocked because Flutter SDK is unavailable in this container.
+Next Step: Run Flutter CI (`pub get`, `analyze`, `build apk`) on GitHub runner to confirm green pipeline.
 
 ## Overall Progress
-```
-V1: [ ] Not Started  [ ] In Progress  [ ] Complete
-V2: [ ] Not Started  [ ] In Progress  [ ] Complete
-V3: [ ] Not Started  [ ] In Progress  [ ] Complete
-```
-
----
+- V1: In Progress (architecture corrected to pure Flutter; runtime verification pending CI)
+- V2: Not Started
+- V3: Not Started
 
 ## Latest Update
 
 ### What Was Done
-[Codex fills after each milestone]
+- Removed standalone native Android `:app` module and root native Gradle project files.
+- Added standard Flutter Android scaffold under `android/` with Flutter Gradle plugin wiring.
+- Implemented Flutter app code in `lib/` with task list UI and Riverpod state.
+- Added widget test scaffold and lint configuration.
+- Updated CI workflow to run `flutter pub get`, `flutter analyze`, and `flutter build apk --release`.
 
 ### Verification Result
-```
-Build:  [ ] Pass  [ ] Fail
-Tests:  [ ] Pass  [ ] Fail  [ ] N/A
-Output: [ ] Runnable  [ ] Not runnable
-```
+- Conflict scan: Pass.
+- `build_runner` usage scan: Pass (none present).
+- Flutter commands: Not executable locally (`flutter` command unavailable in container).
 
 ### Next Step
-[Codex fills — exact next action]
-
----
+Use CI or a local Flutter SDK environment to run `flutter pub get`, `flutter analyze`, and `flutter build apk --release`.
 
 ## History Log
 | # | Milestone | What Done | Build | Date |
 |---|-----------|-----------|-------|------|
-| 1 | [Codex fills] | [Codex fills] | ✅/❌ | [date] |
-
----
+| 1 | V1 | Initial native Android MVP pass | ❌ | 2026-03-03 |
+| 2 | V1 repair | Dependency and CI alignment | ⚠️ | 2026-03-04 |
+| 3 | V1 repair | Pure Flutter architecture conversion | ⚠️ | 2026-03-04 |
 
 ## Active Assumptions
-[Codex logs any assumptions made during build]
-
 | # | Assumption | Reason | Reversible |
 |---|-----------|--------|------------|
-| 1 | [Codex fills] | [reason] | Yes/No |
-
----
+| 1 | ASSUMPTION: Minimal in-memory Flutter task state is acceptable for this repair pass | Reason: Request focused on architecture/layout and mergeability, not full feature parity implementation details | Yes |
+| 2 | ASSUMPTION: Flutter Android scaffold with generated gradle wrapper files is sufficient for CI APK builds | Reason: Standard Flutter Android structure expects these files | Yes |
 
 ## Active Blockers
-[Codex logs anything waiting on human input]
-
 | # | Blocker | Options Given | Status |
 |---|---------|--------------|--------|
-| 1 | [Codex fills] | A/B/C | Waiting |
-
----
+| 1 | Flutter SDK not installed in this execution container | A) run GitHub Actions workflow B) run locally with Flutter installed C) provide Flutter-enabled container | Waiting |
 
 ## Known Issues
-[Non-critical issues discovered during build]
-
 | # | Issue | Severity | Workaround |
 |---|-------|----------|------------|
-| 1 | [Codex fills] | Low/Med/High | [Codex fills] |
+| 1 | Cannot execute Flutter commands locally in current environment | High | Verify via CI or local Flutter SDK environment |
+
+
+## Artifact cleanup update
+- Removed binary artifact `android/gradle/wrapper/gradle-wrapper.jar` to avoid binary PR failures.
+- Added Flutter `.gitignore` to prevent committing build outputs (`build/`, `.dart_tool/`, `*.apk`, `*.aab`).
