@@ -1,18 +1,21 @@
-import 'dart:math';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 import 'package:taskremind_pro/domain/models/task.dart';
+import 'package:taskremind_pro/main.dart';
 
 final taskRepositoryProvider = Provider<TaskRepository>((ref) {
-  return TaskRepository();
+  final isar = ref.read(isarProvider);
+  return TaskRepository(isar);
 });
 
 class TaskRepository {
-  final List<Task> _tasks = <Task>[];
+  TaskRepository(this._isar);
+
+  final Isar _isar;
 
   Future<List<Task>> list() async {
-    _tasks.sort((a, b) => a.remindAt.compareTo(b.remindAt));
-    return List<Task>.unmodifiable(_tasks);
+    final tasks = await _isar.collection<Task>().where().sortByRemindAt().findAll();
+    return List<Task>.unmodifiable(tasks);
   }
 
   Future<Task> save({
@@ -22,7 +25,6 @@ class TaskRepository {
     required RepeatType repeatType,
   }) async {
     final task = Task()
-      ..id = Random().nextInt(1 << 31)
       ..title = title
       ..description = description
       ..remindAt = remindAt
@@ -31,17 +33,34 @@ class TaskRepository {
       ..createdAt = DateTime.now()
       ..updatedAt = DateTime.now();
 
-    _tasks.add(task);
+    await _isar.writeTxn(() async {
+      await _isar.collection<Task>().put(task);
+    });
     return task;
   }
 
   Future<void> markDone(int id) async {
-    _tasks.removeWhere((t) => t.id == id);
+    await _isar.writeTxn(() async {
+      await _isar.collection<Task>().delete(id);
+    });
   }
 
-  Future<void> snooze10Min(int id) async {
-    final task = _tasks.firstWhere((t) => t.id == id);
-    task.remindAt = task.remindAt.add(const Duration(minutes: 10));
-    task.updatedAt = DateTime.now();
+  Future<Task?> getById(int id) => _isar.collection<Task>().get(id);
+
+  Future<Task?> snooze10Min(int id) async {
+    final task = await _isar.collection<Task>().get(id);
+    if (task == null) {
+      return null;
+    }
+
+    task
+      ..remindAt = DateTime.now().add(const Duration(minutes: 10))
+      ..updatedAt = DateTime.now();
+
+    await _isar.writeTxn(() async {
+      await _isar.collection<Task>().put(task);
+    });
+
+    return task;
   }
 }
