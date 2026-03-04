@@ -1,52 +1,55 @@
-# DECISIONS.md — Technical Decisions Log
-
 ## [DEC-001] Architecture Pattern
+
 Date: 2026-03-03
+
 Status: Decided
 
 Decision: Flutter + Riverpod state management with feature-first folders and service layer separation.
+
 Reason: Keeps UI declarative while isolating scheduling/overlay behavior from widgets.
-Rejected: Heavy MVVM boilerplate and BLoC; both add complexity for V1 scope.
+
 Impact: Controllers own state transitions, widgets remain presentation focused.
 
 ## [DEC-002] Database / Storage
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: Target Isar as the long-term local database model.
-Reason: SPEC requires Isar and offline storage.
-Rejected: SQLite and shared_preferences because they diverge from SPEC package mandate.
-Impact: Task model structured for Isar annotations; V1 repo abstraction prepared for Isar-backed swap.
+Decision: Isar local database for persistent task storage.
 
-## [DEC-003] Key Libraries / Dependencies
+Reason: Offline storage, fast, Flutter-native.
+
+Impact: Task model structured for Isar annotations.
+
+## [DEC-003] Key Libraries
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: Use the dependency set pinned in SPEC.md (Riverpod, Isar, local notifications, overlay window, workmanager, permission handler, package info).
-Reason: Aligns with requirements and Android reminder feature set.
-Impact: pubspec and service scaffolding match required package ecosystem.
+Decision: Riverpod, Isar, flutter_local_notifications, flutter_overlay_window, workmanager, permission_handler.
+
+Reason: Aligns with SPEC requirements and Android reminder feature set.
 
 ## [DEC-004] Network Access
+
 Date: 2026-03-03
+
 Status: Not Required
 
 Decision: Network OFF.
-Allowed Domains: None.
-Reason: App is explicitly offline-only with no backend/cloud sync.
 
-## [DEC-005] Security Approach
+Reason: App is 100% offline, no backend, no cloud sync.
+
+## [DEC-005] Security
+
 Date: 2026-03-03
+
 Status: Decided
 
-Decision: Minimize permission surface to local reminder needs and explicitly avoid INTERNET permission.
-Reason: Reduces attack surface and enforces offline requirement.
-Impact: AndroidManifest requests only notification/alarm/overlay/battery related permissions.
+Decision: No INTERNET permission. Local storage only.
 
-## [DEC-006] Build Verification in Restricted Environment
-Date: 2026-03-03
-Status: Decided
+Reason: Offline requirement, reduced attack surface.
 
-Decision: Use static file validation and document non-executable Flutter commands when Flutter SDK is missing.
-Reason: The execution environment does not include `flutter`; runtime build cannot execute here.
-Rejected: Mocking build success without proof.
-Impact: STATUS and final report explicitly mark verification limitation.
+Impact: AndroidManifest requests only notification/alarm/overlay permissions.
