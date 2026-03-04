@@ -6,44 +6,43 @@
 ## V1 — Core Working Feature
 
 ### Goal
-Deliver a functional offline Android reminder app with task CRUD, daily reminders, and full-screen floating reminder UI.
+Deliver a pure Flutter Android reminder app with local task management, daily reminder workflow, and overlay-ready dependency setup.
 
 ### Acceptance Criteria
-- [x] Add/edit/delete task entries locally.
-- [x] User can pick daily time for each task.
-- [x] Reminder broadcast launches overlay UI with task title and actions.
-- [x] Done / Snooze 10m / Dismiss actions are wired.
-- [x] Global reminder toggle and settings screen exist.
+- [x] Flutter project structure is standard (`lib/`, `android/`, `pubspec.yaml`).
+- [x] Core task UI supports add/delete and time selection.
+- [x] Global reminder and dark mode toggles exist in UI state.
+- [x] CI runs Flutter dependency + analyze + APK build steps.
+- [ ] Reminder delivery + overlay actions are fully implemented end-to-end in Flutter runtime.
 
 ### Tasks
-- [x] Create Android app module and baseline resources.
-- [x] Implement Room storage for tasks.
-- [x] Implement reminder scheduling via AlarmManager.
-- [x] Implement overlay reminder activity.
-- [x] Implement settings (global toggle, dark mode, permissions guide).
+- [x] Remove non-Flutter native module implementation.
+- [x] Add Flutter app scaffold and Riverpod state.
+- [x] Configure Flutter Android host project and CI.
+- [ ] Implement full reminder scheduling + overlay interactions.
 
 ### Estimated Scope
-Single-module Android app, Kotlin + XML UI, offline persistence and local alarms.
+Single Flutter app targeting Android, offline-only behavior.
 
 ## V2 — Complete Feature Set
 
 ### Goal
-Improve UX and resilience for production-like usage.
+Complete full reminder behavior and improve UX reliability.
 
 ### Acceptance Criteria
-- [ ] Better task filtering/sorting and status indicators.
-- [ ] Robust background/boot behavior across OEM devices.
-- [ ] Validation and edge-case handling polish.
+- [ ] Reminder fires at configured daily time.
+- [ ] Overlay popup supports Done / Snooze 10m / Dismiss actions.
+- [ ] Task editing flow and persistence survive app restarts.
 
 ### Tasks
-- [ ] Add stronger validation and UX refinements.
-- [ ] Add instrumentation/unit tests for key flows.
-- [ ] Expand permission guidance with deep links.
+- [ ] Add local persistence and restore on startup.
+- [ ] Integrate reminder + notification/overlay package flows.
+- [ ] Implement edit flow and permission guidance screen.
 
 ## V3 — Production Ready
 
 ### Goal
-Stabilize for release and documentation completeness.
+Stabilize and ship-ready hardening.
 
 ### Acceptance Criteria
 - [ ] Build passes all checks.
@@ -58,10 +57,10 @@ Stabilize for release and documentation completeness.
 ## Risks & Blockers
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Overlay behavior differs by OEM/Android version | High | Provide permissions guide and fallback checks for overlay permission |
-| Exact alarm restrictions on newer Android builds | High | Request exact alarm capability and re-schedule after boot/package replace |
+| Flutter SDK absent in local execution environment | High | Validate via CI and local dev machines with Flutter installed |
+| Android overlay behavior may vary by OEM | High | Add explicit permission guide + fallback notification UX |
 
 ## Milestone History
 | Milestone | Completed On | Verified By |
 |-----------|-------------|-------------|
-| V1 | 2026-03-03 | Static code review + attempted Gradle build |
+| V1 architecture conversion | 2026-03-04 | Repo structure audit + CI workflow definition |

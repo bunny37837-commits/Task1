@@ -70,3 +70,13 @@ Decision: Keep repository source-only and exclude binary/build artifacts (`*.jar
 Reason: Prior PR creation failed due to binary-file handling limitation.
 Rejected: Committing generated binaries to source control.
 Impact: Improves mergeability and prevents PR tooling failures.
+
+
+## [DEC-009] Conflict-resolution baseline files
+Date: 2026-03-04
+Status: Decided
+
+Decision: Normalize roadmap/docs/manifest to Flutter-first wording and valid Android icon reference in this repair pass.
+Reason: Requested conflict resolution targeted these exact files and required a mergeable, coherent baseline.
+Rejected: Keeping mixed native-Android wording from superseded implementation.
+Impact: Reduced drift between code, docs, and CI expectations.

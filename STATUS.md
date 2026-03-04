@@ -55,3 +55,9 @@ Use CI or a local Flutter SDK environment to run `flutter pub get`, `flutter ana
 ## Artifact cleanup update
 - Removed binary artifact `android/gradle/wrapper/gradle-wrapper.jar` to avoid binary PR failures.
 - Added Flutter `.gitignore` to prevent committing build outputs (`build/`, `.dart_tool/`, `*.apk`, `*.aab`).
+
+
+## Conflict resolution update
+- Normalized roadmap and README content to pure Flutter scope.
+- Fixed Android manifest app icon reference to existing drawable resource.
+- Re-validated target files for conflict markers.
